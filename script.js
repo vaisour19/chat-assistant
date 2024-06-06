@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 const sendChatBtn = document.querySelector(".chat-input span");
 const chatInput = document.querySelector(".chat-input textarea");
 const chatbox = document.querySelector(".chatbox");
-const API_KEY = "sk-proj-BknZXb4u6cgSUbJWr9RwT3BlbkFJSWwP1HrEXd8NLEM6exXw";
 
 let userMessage;
+
 const createChatLi = (message, className) => {
     const chatli = document.createElement("li");
     chatli.classList.add("chat", className);
@@ -23,7 +25,7 @@ const generateResponse = () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${API_KEY}`,
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -44,7 +46,6 @@ const generateResponse = () => {
 
 const handleChat = () => {
     userMessage = chatInput.value.trim();
-    // console.log(userMessage);
 
     if (!userMessage) return;
 
